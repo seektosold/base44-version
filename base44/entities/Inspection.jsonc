@@ -1,0 +1,61 @@
+{
+  "name": "Inspection",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string"
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "assigned_leasing_id": {
+      "type": "string"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "booked",
+        "confirmed",
+        "reminder_sent",
+        "attended",
+        "no_show",
+        "cancelled",
+        "follow_up_sent",
+        "application_received"
+      ]
+    },
+    "attended": {
+      "type": "boolean"
+    },
+    "follow_up_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "application_link_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": [
+        "full_auto",
+        "approval",
+        "hybrid"
+      ]
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "inspection_date"
+  ]
+}

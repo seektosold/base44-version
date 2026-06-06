@@ -1,0 +1,166 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "string"
+    },
+    "suburb": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "property_type": {
+      "type": "string",
+      "enum": [
+        "house",
+        "unit",
+        "apartment",
+        "townhouse",
+        "land",
+        "commercial",
+        "other"
+      ]
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "car_spaces": {
+      "type": "number"
+    },
+    "land_size": {
+      "type": "number"
+    },
+    "floor_size": {
+      "type": "number"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "shared"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "sold",
+        "leased",
+        "available",
+        "under_management"
+      ]
+    },
+    "listing_status": {
+      "type": "string",
+      "enum": [
+        "pre_market",
+        "listed",
+        "under_offer",
+        "sold",
+        "withdrawn",
+        "not_listed"
+      ]
+    },
+    "leasing_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "application_pending",
+        "leased",
+        "vacating"
+      ]
+    },
+    "landlord_contact_id": {
+      "type": "string"
+    },
+    "tenant_contact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assigned_agent_id": {
+      "type": "string"
+    },
+    "assigned_pm_id": {
+      "type": "string"
+    },
+    "assigned_leasing_id": {
+      "type": "string"
+    },
+    "asking_price": {
+      "type": "number"
+    },
+    "sale_price": {
+      "type": "number"
+    },
+    "weekly_rent": {
+      "type": "number"
+    },
+    "lease_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "lease_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "management_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_appraisal_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_appraisal_value": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    },
+    "service_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "address",
+    "suburb",
+    "module_type"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "name": "ServiceRequest",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "issue_type": {
+      "type": "string",
+      "enum": [
+        "maintenance",
+        "repair",
+        "complaint",
+        "inspection",
+        "emergency",
+        "improvement",
+        "other"
+      ]
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "emergency",
+        "urgent",
+        "routine",
+        "low"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "info_requested",
+        "quotes_requested",
+        "quotes_received",
+        "landlord_approval_pending",
+        "approved",
+        "contractor_booked",
+        "scheduled",
+        "in_progress",
+        "completion_pending",
+        "completed",
+        "closed",
+        "escalated"
+      ]
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "tenant_contact_id": {
+      "type": "string"
+    },
+    "landlord_contact_id": {
+      "type": "string"
+    },
+    "assigned_pm_id": {
+      "type": "string"
+    },
+    "contractor_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "selected_contractor_id": {
+      "type": "string"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quotes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "approved_quote": {
+      "type": "object"
+    },
+    "landlord_approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "landlord_approved_by": {
+      "type": "string"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completion_notes": {
+      "type": "string"
+    },
+    "completion_photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "invoice_url": {
+      "type": "string"
+    },
+    "invoice_amount": {
+      "type": "number"
+    },
+    "missing_info_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": [
+        "full_auto",
+        "approval",
+        "hybrid"
+      ]
+    },
+    "audit_log": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "title",
+    "property_id",
+    "issue_type",
+    "urgency"
+  ]
+}

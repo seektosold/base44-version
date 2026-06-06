@@ -1,0 +1,95 @@
+{
+  "name": "Task",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "owner_admin",
+        "shared"
+      ]
+    },
+    "role_visibility": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "assigned_user_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "overdue",
+        "cancelled",
+        "waiting"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "urgent",
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_by": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "automation_triggered": {
+      "type": "boolean",
+      "default": false
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "module_type"
+  ]
+}

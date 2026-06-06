@@ -1,0 +1,135 @@
+{
+  "name": "Application",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string"
+    },
+    "applicant_contact_id": {
+      "type": "string"
+    },
+    "inspection_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "received",
+        "incomplete",
+        "info_requested",
+        "complete",
+        "shortlisted",
+        "landlord_review",
+        "approved",
+        "unsuccessful",
+        "withdrawn"
+      ]
+    },
+    "move_in_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "weekly_rent_offered": {
+      "type": "number"
+    },
+    "identity_docs": {
+      "type": "boolean",
+      "default": false
+    },
+    "employment_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "income_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "rental_history": {
+      "type": "boolean",
+      "default": false
+    },
+    "references_provided": {
+      "type": "boolean",
+      "default": false
+    },
+    "pets": {
+      "type": "boolean",
+      "default": false
+    },
+    "pet_details": {
+      "type": "string"
+    },
+    "missing_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "completeness_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "ranking_score": {
+      "type": "number"
+    },
+    "ranking_position": {
+      "type": "number"
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ai_summary": {
+      "type": "string"
+    },
+    "employment_summary": {
+      "type": "string"
+    },
+    "rental_history_summary": {
+      "type": "string"
+    },
+    "references_summary": {
+      "type": "string"
+    },
+    "landlord_decision": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "landlord_decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assigned_leasing_id": {
+      "type": "string"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "applicant_contact_id"
+  ]
+}

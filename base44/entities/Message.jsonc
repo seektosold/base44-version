@@ -1,0 +1,156 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "whatsapp",
+        "call_script"
+      ]
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "outbound",
+        "inbound"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "drafted",
+        "pending_approval",
+        "approved",
+        "scheduled",
+        "queued",
+        "sent",
+        "delivered",
+        "replied",
+        "bounced",
+        "failed",
+        "suppressed",
+        "opted_out",
+        "provider_not_connected"
+      ]
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "signal_id": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "owner_admin"
+      ]
+    },
+    "role_visibility": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assigned_user_id": {
+      "type": "string"
+    },
+    "ai_generated": {
+      "type": "boolean",
+      "default": true
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scheduled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reply_triage": {
+      "type": "string",
+      "enum": [
+        "book_call",
+        "send_details",
+        "interested",
+        "not_now",
+        "wrong_fit",
+        "angry",
+        "unsubscribe",
+        "needs_human",
+        "no_response",
+        "duplicate"
+      ]
+    },
+    "edit_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "original_draft": {
+      "type": "string"
+    },
+    "source_rationale": {
+      "type": "string"
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "from_address": {
+      "type": "string"
+    },
+    "to_address": {
+      "type": "string"
+    },
+    "from_number": {
+      "type": "string"
+    },
+    "to_number": {
+      "type": "string"
+    },
+    "organisation_id": {
+      "type": "string"
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": [
+        "full_auto",
+        "approval",
+        "hybrid"
+      ]
+    }
+  },
+  "required": [
+    "channel",
+    "status",
+    "module_type"
+  ]
+}

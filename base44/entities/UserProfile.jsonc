@@ -1,0 +1,120 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "owner",
+        "sales",
+        "property_manager",
+        "leasing"
+      ]
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "territory": {
+      "type": "string"
+    },
+    "service_area": {
+      "type": "string"
+    },
+    "market_focus": {
+      "type": "string"
+    },
+    "tone_preference": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "concise",
+          "warm",
+          "direct",
+          "premium",
+          "friendly",
+          "formal"
+        ]
+      }
+    },
+    "writing_samples": {
+      "type": "string"
+    },
+    "preferred_channels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "working_hours_start": {
+      "type": "string"
+    },
+    "working_hours_end": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": [
+        "full_auto",
+        "approval",
+        "hybrid"
+      ]
+    },
+    "can_set_automation": {
+      "type": "boolean",
+      "default": false
+    },
+    "email_auto_reply": {
+      "type": "boolean",
+      "default": false
+    },
+    "sms_auto_reply": {
+      "type": "boolean",
+      "default": false
+    },
+    "module_permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extra_permissions": {
+      "type": "object"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "suspended",
+        "pending"
+      ]
+    },
+    "onboarding_complete": {
+      "type": "boolean",
+      "default": false
+    },
+    "organisation_id": {
+      "type": "string"
+    },
+    "avatar_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "role",
+    "organisation_id"
+  ]
+}

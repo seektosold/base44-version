@@ -1,0 +1,105 @@
+{
+  "name": "Workflow",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "workflow_type": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "owner_admin"
+      ]
+    },
+    "role_visibility": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "assigned_user_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "completed",
+        "cancelled",
+        "waiting_approval",
+        "automation_blocked"
+      ]
+    },
+    "automation_mode": {
+      "type": "string",
+      "enum": [
+        "full_auto",
+        "approval",
+        "hybrid"
+      ]
+    },
+    "automation_enabled_by": {
+      "type": "string"
+    },
+    "current_step": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "last_action": {
+      "type": "string"
+    },
+    "last_action_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_action": {
+      "type": "string"
+    },
+    "next_action_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": true
+    },
+    "audit_log": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "workflow_type",
+    "module_type"
+  ]
+}

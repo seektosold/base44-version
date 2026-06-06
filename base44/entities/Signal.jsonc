@@ -1,0 +1,108 @@
+{
+  "name": "Signal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "signal_type": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "owner_admin"
+      ]
+    },
+    "role_visibility": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "owner",
+          "sales",
+          "property_manager",
+          "leasing"
+        ]
+      }
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "urgency_score": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "confidence_level": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "recommended_action": {
+      "type": "string"
+    },
+    "recommended_channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "phone",
+        "any"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_progress",
+        "actioned",
+        "snoozed",
+        "dismissed",
+        "expired"
+      ]
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assigned_user_id": {
+      "type": "string"
+    },
+    "automation_eligible": {
+      "type": "boolean",
+      "default": false
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": true
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "signal_type",
+    "module_type",
+    "role_visibility"
+  ]
+}

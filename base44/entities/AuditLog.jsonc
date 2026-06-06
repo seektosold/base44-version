@@ -1,0 +1,75 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "owner_admin",
+        "system"
+      ]
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_role": {
+      "type": "string"
+    },
+    "contact_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "workflow_id": {
+      "type": "string"
+    },
+    "message_id": {
+      "type": "string"
+    },
+    "automation_rule": {
+      "type": "string"
+    },
+    "workflow_step": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "content_sent": {
+      "type": "string"
+    },
+    "source_rationale": {
+      "type": "string"
+    },
+    "outcome": {
+      "type": "string"
+    },
+    "approval_required": {
+      "type": "boolean"
+    },
+    "approval_bypassed": {
+      "type": "boolean"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "organisation_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_type",
+    "description",
+    "module_type"
+  ]
+}

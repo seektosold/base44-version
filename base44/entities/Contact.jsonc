@@ -1,0 +1,192 @@
+{
+  "name": "Contact",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "mobile": {
+      "type": "string"
+    },
+    "contact_type": {
+      "type": "string",
+      "enum": [
+        "buyer",
+        "seller",
+        "past_client",
+        "landlord",
+        "tenant",
+        "applicant",
+        "contractor",
+        "referrer",
+        "prospect",
+        "other"
+      ]
+    },
+    "module_type": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "property_management",
+        "leasing",
+        "shared"
+      ]
+    },
+    "role_visibility": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "owner",
+          "sales",
+          "property_manager",
+          "leasing"
+        ]
+      }
+    },
+    "assigned_user_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suppressed",
+        "do_not_contact"
+      ]
+    },
+    "source": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "suburb": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "preferred_channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "phone",
+        "any"
+      ]
+    },
+    "sms_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "email_consent": {
+      "type": "boolean",
+      "default": true
+    },
+    "sms_opted_out": {
+      "type": "boolean",
+      "default": false
+    },
+    "email_opted_out": {
+      "type": "boolean",
+      "default": false
+    },
+    "suppressed": {
+      "type": "boolean",
+      "default": false
+    },
+    "last_sms_sent": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_email_sent": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_contacted": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "budget_min": {
+      "type": "number"
+    },
+    "budget_max": {
+      "type": "number"
+    },
+    "property_interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_data_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ai_insights": {
+      "type": "string"
+    },
+    "priority_score": {
+      "type": "number"
+    },
+    "warmth_score": {
+      "type": "number"
+    },
+    "linked_property_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organisation_id": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "abn": {
+      "type": "string"
+    },
+    "licence_number": {
+      "type": "string"
+    },
+    "insurance_expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "trade_type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "full_name",
+    "contact_type",
+    "module_type"
+  ]
+}
