@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import StatusPill from '@/components/ui/StatusPill';
 import AutomodeBadge from '@/components/ui/AutomodeBadge';
+import SignalViewDrawer from '@/components/signals/SignalViewDrawer';
 import {
   TrendingUp, Zap, MessageSquare, CheckSquare, Users, ArrowRight,
   Clock, Star, AlertTriangle, Bot, Phone, Mail, Inbox, Sun,
@@ -13,7 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useUser } from '@/lib/userContext';
 
-function OpportunityCard({ signal, onAction }) {
+function OpportunityCard({ signal, onView }) {
   return (
     <Card className="border border-border card-hover">
       <CardContent className="p-4">
@@ -24,7 +25,9 @@ function OpportunityCard({ signal, onAction }) {
               {signal.urgency_score >= 8 && (
                 <span className="status-pill bg-red-100 text-red-700">Urgent</span>
               )}
-              <AutomodeBadge mode={signal.automation_mode || 'approval'} size="xs" />
+              {signal.requires_approval && (
+                <span className="status-pill bg-yellow-100 text-yellow-700">☑ Approval Required</span>
+              )}
             </div>
             <h3 className="font-semibold text-sm text-foreground mt-1">{signal.title}</h3>
             <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{signal.rationale}</p>
@@ -54,10 +57,10 @@ function OpportunityCard({ signal, onAction }) {
           </div>
 
           <div className="flex flex-col gap-1.5 flex-shrink-0">
-            <Button size="sm" className="h-7 text-xs bg-primary">
+            <Button size="sm" className="h-7 text-xs bg-slate-900 text-white hover:bg-slate-700">
               <CheckSquare className="w-3 h-3 mr-1" /> Approve
             </Button>
-            <Button size="sm" variant="outline" className="h-7 text-xs">
+            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => onView(signal)}>
               <Eye className="w-3 h-3 mr-1" /> View
             </Button>
           </div>
@@ -96,6 +99,7 @@ export default function SalesDashboard() {
   const [tasks, setTasks] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [viewingSignal, setViewingSignal] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -158,7 +162,7 @@ export default function SalesDashboard() {
               {prioritySignals.length > 0 ? (
                 <div className="space-y-3">
                   {prioritySignals.slice(0, 5).map(signal => (
-                    <OpportunityCard key={signal.id} signal={signal} />
+                    <OpportunityCard key={signal.id} signal={signal} onView={setViewingSignal} />
                   ))}
                   {prioritySignals.length > 5 && (
                     <Button variant="outline" size="sm" className="w-full" asChild>
@@ -300,6 +304,12 @@ export default function SalesDashboard() {
           </div>
         </div>
       )}
+
+      <SignalViewDrawer
+        signal={viewingSignal}
+        open={!!viewingSignal}
+        onClose={() => setViewingSignal(null)}
+      />
     </div>
   );
 }
