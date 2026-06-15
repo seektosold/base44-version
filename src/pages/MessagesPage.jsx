@@ -40,6 +40,11 @@ function MessageCard({ message, onApprove, onEdit }) {
               {channelIcon[message.channel]}
               <span className="text-xs font-medium capitalize">{message.channel?.replace(/_/g,' ')}</span>
               <StatusPill status={message.status} />
+              {message.module_type && (
+                <span className="status-pill bg-slate-100 text-slate-600 text-xs capitalize">
+                  {message.module_type === 'sales' ? 'Sales / CRM' : message.module_type.replace(/_/g,' ')}
+                </span>
+              )}
               {message.ai_generated && (
                 <span className="status-pill bg-purple-100 text-purple-700">
                   <Bot className="w-2.5 h-2.5" /> AI Draft
@@ -257,6 +262,7 @@ export default function MessagesPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('approval_queue');
   const [showStudio, setShowStudio] = useState(false);
+  const [moduleFilter, setModuleFilter] = useState('all');
 
   useEffect(() => {
     Promise.all([
@@ -279,11 +285,12 @@ export default function MessagesPage() {
     setShowStudio(false);
   }
 
-  const byStatus = (status) => messages.filter(m => m.status === status);
+  const moduleFiltered = moduleFilter === 'all' ? messages : messages.filter(m => m.module_type === moduleFilter);
+  const byStatus = (status) => moduleFiltered.filter(m => m.status === status);
   const pendingApproval = byStatus('pending_approval');
   const drafts = byStatus('drafted');
-  const sent = messages.filter(m => ['sent', 'delivered', 'queued', 'scheduled'].includes(m.status));
-  const replies = messages.filter(m => m.reply_triage);
+  const sent = moduleFiltered.filter(m => ['sent', 'delivered', 'queued', 'scheduled'].includes(m.status));
+  const replies = moduleFiltered.filter(m => m.reply_triage);
 
   return (
     <div className="p-6 space-y-6 max-w-7xl mx-auto">
@@ -309,6 +316,22 @@ export default function MessagesPage() {
             <MessageStudio contacts={contacts} onSave={handleSaveMessage} />
           </DialogContent>
         </Dialog>
+      </div>
+
+      {/* Module filter */}
+      <div className="flex gap-2 flex-wrap">
+        {[
+          { key: 'all', label: 'All Modules' },
+          { key: 'sales', label: 'Sales Listings & CRM' },
+          { key: 'property_management', label: 'Property Management' },
+          { key: 'leasing', label: 'Leasing' },
+          { key: 'owner_admin', label: 'Owner / Admin' },
+        ].map(m => (
+          <Button key={m.key} size="sm" variant={moduleFilter === m.key ? 'default' : 'outline'}
+            onClick={() => setModuleFilter(m.key)} className={moduleFilter === m.key ? 'bg-primary' : ''}>
+            {m.label}
+          </Button>
+        ))}
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>

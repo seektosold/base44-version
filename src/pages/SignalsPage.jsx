@@ -116,9 +116,25 @@ function CreateSignalForm({ onSave, onCancel }) {
             </SelectContent>
           </Select>
         </div>
-        <div className="col-span-2">
+        <div>
           <Label>Source</Label>
-          <Input value={form.source} onChange={e => setForm({...form, source: e.target.value})} placeholder="e.g. CRM, Market Data" />
+          <Select value={form.source} onValueChange={v => setForm({...form, source: v})}>
+            <SelectTrigger><SelectValue placeholder="Select source…" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="CRM">CRM</SelectItem>
+              <SelectItem value="Re-engagement">Re-engagement</SelectItem>
+              <SelectItem value="Sales Listing">Sales Listing</SelectItem>
+              <SelectItem value="Portal Enquiry">Portal Enquiry</SelectItem>
+              <SelectItem value="Market Data">Market Data</SelectItem>
+              <SelectItem value="Manual">Manual</SelectItem>
+              <SelectItem value="Property Management">Property Management</SelectItem>
+              <SelectItem value="Leasing">Leasing</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label>Signal Type</Label>
+          <Input value={form.signal_type} onChange={e => setForm({...form, signal_type: e.target.value})} placeholder="e.g. re_engagement, listing_enquiry" />
         </div>
       </div>
       <div>
@@ -142,6 +158,7 @@ export default function SignalsPage() {
   const [signals, setSignals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterModule, setFilterModule] = useState('all');
+  const [filterSource, setFilterSource] = useState('all');
   const [search, setSearch] = useState('');
   const [showCreate, setShowCreate] = useState(false);
 
@@ -177,7 +194,11 @@ export default function SignalsPage() {
   const filtered = signals.filter(s => {
     const matchModule = filterModule === 'all' || s.module_type === filterModule;
     const matchSearch = !search || s.title?.toLowerCase().includes(search.toLowerCase());
-    return matchModule && matchSearch;
+    const matchSource = filterSource === 'all' ||
+      (filterSource === 'crm' && ['CRM', 'crm', 'Re-engagement', 're_engagement'].includes(s.source)) ||
+      (filterSource === 'listings' && ['Sales Listing', 'listing', 'Portal Enquiry'].includes(s.source)) ||
+      (filterSource === 'other' && !['CRM', 'crm', 'Re-engagement', 're_engagement', 'Sales Listing', 'listing', 'Portal Enquiry'].includes(s.source));
+    return matchModule && matchSearch && matchSource;
   });
 
   const active = filtered.filter(s => ['new', 'in_progress'].includes(s.status));
@@ -209,11 +230,24 @@ export default function SignalsPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input placeholder="Search signals..." className="pl-9" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {(userRole === ROLES.OWNER ? ['all', 'sales', 'property_management', 'leasing'] : ['all']).map(m => (
             <Button key={m} variant={filterModule === m ? 'default' : 'outline'} size="sm"
               onClick={() => setFilterModule(m)} className={filterModule === m ? 'bg-primary' : ''}>
-              {m === 'all' ? 'All' : m === 'property_management' ? 'PM' : m.charAt(0).toUpperCase() + m.slice(1)}
+              {m === 'all' ? 'All Modules' : m === 'property_management' ? 'PM' : m.charAt(0).toUpperCase() + m.slice(1)}
+            </Button>
+          ))}
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          {[
+            { key: 'all', label: 'All Sources' },
+            { key: 'crm', label: 'CRM / Re-engagement' },
+            { key: 'listings', label: 'Sales Listings' },
+            { key: 'other', label: 'Other' },
+          ].map(s => (
+            <Button key={s.key} variant={filterSource === s.key ? 'secondary' : 'ghost'} size="sm"
+              onClick={() => setFilterSource(s.key)} className="text-xs">
+              {s.label}
             </Button>
           ))}
         </div>

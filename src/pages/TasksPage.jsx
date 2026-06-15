@@ -22,7 +22,8 @@ function TaskForm({ onSave, onCancel }) {
           <Select value={form.module_type} onValueChange={v => setForm({...form, module_type: v})}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="sales">Sales</SelectItem>
+              <SelectItem value="sales">Sales Listings</SelectItem>
+              <SelectItem value="owner_admin">CRM / Re-engagement</SelectItem>
               <SelectItem value="property_management">Property Management</SelectItem>
               <SelectItem value="leasing">Leasing</SelectItem>
               <SelectItem value="shared">Shared</SelectItem>
@@ -89,9 +90,16 @@ export default function TasksPage() {
         </Dialog>
       </div>
       <div className="flex gap-2 flex-wrap">
-        {['all','sales','property_management','leasing','shared'].map(m => (
-          <Button key={m} variant={filterModule === m ? 'default' : 'outline'} size="sm" onClick={() => setFilterModule(m)} className={filterModule === m ? 'bg-primary' : ''}>
-            {m === 'property_management' ? 'PM' : m.charAt(0).toUpperCase() + m.slice(1)}
+        {[
+          { key: 'all', label: 'All' },
+          { key: 'sales', label: 'Sales Listings' },
+          { key: 'owner_admin', label: 'CRM / Re-engagement' },
+          { key: 'property_management', label: 'PM' },
+          { key: 'leasing', label: 'Leasing' },
+          { key: 'shared', label: 'Shared' },
+        ].map(m => (
+          <Button key={m.key} variant={filterModule === m.key ? 'default' : 'outline'} size="sm" onClick={() => setFilterModule(m.key)} className={filterModule === m.key ? 'bg-primary' : ''}>
+            {m.label}
           </Button>
         ))}
       </div>

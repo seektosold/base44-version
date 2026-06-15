@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Shield, Plus, UserX, UserCheck, AlertTriangle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -86,44 +87,81 @@ export default function UsersPage() {
         </Dialog>
       </div>
 
-      <Card>
-        <CardHeader><CardTitle className="text-base">Role Permission Matrix</CardTitle></CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Permission</th>
-                  {Object.entries(ROLE_LABELS).map(([role, label]) => (
-                    <th key={role} className="text-center py-2 px-3 font-semibold"><span className={`status-pill ${getRoleColor(role)}`}>{label}</span></th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { perm: 'View all data', owner: true, sales: false, pm: false, leasing: false },
-                  { perm: 'Sales module', owner: true, sales: true, pm: false, leasing: false },
-                  { perm: 'PM module', owner: true, sales: false, pm: true, leasing: false },
-                  { perm: 'Leasing module', owner: true, sales: false, pm: false, leasing: true },
-                  { perm: 'Invite users', owner: true, sales: false, pm: false, leasing: false },
-                  { perm: 'Manage automation', owner: true, sales: false, pm: false, leasing: false },
-                  { perm: 'Configure settings', owner: true, sales: false, pm: false, leasing: false },
-                  { perm: 'View audit logs', owner: true, sales: false, pm: false, leasing: false },
-                  { perm: 'Approve messages', owner: true, sales: true, pm: true, leasing: true },
-                  { perm: 'AI message studio', owner: true, sales: true, pm: true, leasing: true },
-                ].map(row => (
-                  <tr key={row.perm} className="border-b border-border/50 hover:bg-muted/30">
-                    <td className="py-2 pr-4">{row.perm}</td>
-                    {['owner','sales','pm','leasing'].map(r => (
-                      <td key={r} className="text-center py-2 px-3">{row[r] ? <span className="text-green-600 font-bold">✓</span> : <span className="text-muted-foreground/40">—</span>}</td>
+      <Tabs defaultValue="permissions">
+        <TabsList className="mb-4">
+          <TabsTrigger value="permissions">Permission Matrix</TabsTrigger>
+          <TabsTrigger value="modules">Module Access</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="permissions">
+          <Card>
+            <CardHeader><CardTitle className="text-base">Role Permission Matrix</CardTitle></CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2 pr-4 font-semibold text-muted-foreground">Permission</th>
+                      {Object.entries(ROLE_LABELS).map(([role, label]) => (
+                        <th key={role} className="text-center py-2 px-3 font-semibold"><span className={`status-pill ${getRoleColor(role)}`}>{label}</span></th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { perm: 'View all data', owner: true, sales: false, pm: false, leasing: false },
+                      { perm: 'Sales Listings', owner: true, sales: true, pm: false, leasing: false },
+                      { perm: 'CRM / Re-engagement', owner: true, sales: true, pm: false, leasing: false },
+                      { perm: 'PM module', owner: true, sales: false, pm: true, leasing: false },
+                      { perm: 'Leasing module', owner: true, sales: false, pm: false, leasing: true },
+                      { perm: 'Invite users', owner: true, sales: false, pm: false, leasing: false },
+                      { perm: 'Manage automation', owner: true, sales: false, pm: false, leasing: false },
+                      { perm: 'Configure settings', owner: true, sales: false, pm: false, leasing: false },
+                      { perm: 'View audit logs', owner: true, sales: false, pm: false, leasing: false },
+                      { perm: 'Approve messages', owner: true, sales: true, pm: true, leasing: true },
+                      { perm: 'AI message studio', owner: true, sales: true, pm: true, leasing: true },
+                      { perm: 'CRM bulk outreach', owner: true, sales: true, pm: false, leasing: false },
+                      { perm: 'Import database (CRM)', owner: true, sales: false, pm: false, leasing: false },
+                    ].map(row => (
+                      <tr key={row.perm} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-2 pr-4">{row.perm}</td>
+                        {['owner','sales','pm','leasing'].map(r => (
+                          <td key={r} className="text-center py-2 px-3">{row[r] ? <span className="text-green-600 font-bold">✓</span> : <span className="text-muted-foreground/40">—</span>}</td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="modules">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { module: 'Sales Listings', desc: 'Manage active property listings, buyer leads, inspections, auction engagement, analytics and per-listing automation.', roles: ['Owner', 'Sales Agent'], color: 'bg-blue-50 border-blue-200' },
+              { module: 'CRM / Re-engagement', desc: 'Import contact database, AI signal queue, personalised outreach drafts, follow-up pipeline and Seek to Sold re-qualification invites.', roles: ['Owner', 'Sales Agent'], color: 'bg-purple-50 border-purple-200' },
+              { module: 'Property Management', desc: 'Service requests, maintenance workflows, landlord communications and quote approvals.', roles: ['Owner', 'Property Manager'], color: 'bg-green-50 border-green-200' },
+              { module: 'Leasing', desc: 'Inspection scheduling, tenancy applications, applicant scoring and landlord decision packs.', roles: ['Owner', 'Leasing Agent'], color: 'bg-amber-50 border-amber-200' },
+              { module: 'Signals', desc: 'AI-generated action signals across all modules. Owners see all; other roles see their own module only.', roles: ['Owner', 'Sales Agent', 'Property Manager', 'Leasing Agent'], color: 'bg-red-50 border-red-200' },
+              { module: 'Messages', desc: 'Approval queue, drafts, sent messages, reply triage and AI message studio.', roles: ['Owner', 'Sales Agent', 'Property Manager', 'Leasing Agent'], color: 'bg-slate-50 border-slate-200' },
+              { module: 'Automation Control Centre', desc: 'Configure global and per-workflow automation modes, safety rules, channel settings. Owner-only configuration; all roles can view.', roles: ['Owner (configure)', 'All (view)'], color: 'bg-indigo-50 border-indigo-200' },
+              { module: 'Analytics', desc: 'Sales Listings, CRM, Property Management and Leasing tabs. Owners see all; other roles see their module only.', roles: ['Owner (all tabs)', 'Others (own module)'], color: 'bg-teal-50 border-teal-200' },
+            ].map(item => (
+              <Card key={item.module} className={`border ${item.color}`}>
+                <CardContent className="p-4">
+                  <p className="font-semibold text-sm mb-1">{item.module}</p>
+                  <p className="text-xs text-muted-foreground mb-2">{item.desc}</p>
+                  <div className="flex flex-wrap gap-1">
+                    {item.roles.map(r => <span key={r} className="status-pill bg-white border text-slate-700 text-xs">{r}</span>)}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
+      </Tabs>
 
       <div>
         <h2 className="text-lg font-semibold mb-3">Team Members</h2>

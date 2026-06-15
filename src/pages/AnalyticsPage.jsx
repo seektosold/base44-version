@@ -48,6 +48,10 @@ export default function AnalyticsPage() {
     signals: data.signals.filter(s => s.module_type === m).length,
   }));
 
+  const crmSignals = data.signals.filter(s => ['CRM', 'crm', 'Re-engagement', 're_engagement'].includes(s.source));
+  const listingSignals = data.signals.filter(s => ['Sales Listing', 'listing', 'Portal Enquiry'].includes(s.source));
+  const crmMessages = data.messages.filter(m => m.module_type === 'sales' && m.source_rationale?.toLowerCase().includes('crm'));
+
   const taskStatusData = ['pending', 'in_progress', 'completed', 'overdue'].map(s => ({
     name: s.replace(/_/g,' '), count: data.tasks.filter(t => t.status === s).length
   }));
@@ -79,8 +83,14 @@ export default function AnalyticsPage() {
       </div>
 
       <Tabs defaultValue="overview">
-        <TabsList><TabsTrigger value="overview">Overview</TabsTrigger>
-          {userRole === ROLES.OWNER && <><TabsTrigger value="sales">Sales</TabsTrigger><TabsTrigger value="pm">Property Management</TabsTrigger><TabsTrigger value="leasing">Leasing</TabsTrigger></>}
+        <TabsList className="flex flex-wrap h-auto gap-1">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          {userRole === ROLES.OWNER && <>
+            <TabsTrigger value="sales">Sales Listings</TabsTrigger>
+            <TabsTrigger value="crm">CRM / Re-engagement</TabsTrigger>
+            <TabsTrigger value="pm">Property Management</TabsTrigger>
+            <TabsTrigger value="leasing">Leasing</TabsTrigger>
+          </>}
         </TabsList>
 
         <TabsContent value="overview" className="mt-4">
@@ -134,12 +144,79 @@ export default function AnalyticsPage() {
           </div>
         </TabsContent>
 
-        {['sales','pm','leasing'].map(tab => (
-          <TabsContent key={tab} value={tab === 'pm' ? 'pm' : tab} className="mt-4">
+        <TabsContent value="sales" className="mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <StatCard label="Listing Signals" value={listingSignals.length} sub="Portal / enquiry driven" color="text-blue-600" />
+            <StatCard label="Active Buyers (sample)" value="5" sub="Across all listings" />
+            <StatCard label="Avg. Days on Market" value="14" sub="Active listings" />
+            <StatCard label="Offer Conversion" value="17%" sub="Inspected → offer" color="text-green-600" />
+          </div>
+          <Card>
+            <CardContent className="p-8 text-center">
+              <BarChart3 className="w-10 h-10 mx-auto mb-3 text-muted-foreground/40" />
+              <p className="font-medium text-muted-foreground">Detailed Sales Listings analytics</p>
+              <p className="text-sm text-muted-foreground mt-1">Enquiry rates, inspection conversions, offer pipeline and days-on-market trends will populate as listings are tracked.</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="crm" className="mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <StatCard label="CRM Signals" value={crmSignals.length} sub="Re-engagement opportunities" color="text-purple-600" />
+            <StatCard label="CRM Messages" value={crmMessages.length} sub="Outreach sent" color="text-blue-600" />
+            <StatCard label="Hot Leads (sample)" value="1" sub="Intent ≥ 80%" color="text-red-600" />
+            <StatCard label="Warm Leads (sample)" value="2" sub="Intent 40–79%" color="text-amber-600" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader><CardTitle className="text-sm">Signal Sources — CRM</CardTitle></CardHeader>
+              <CardContent>
+                {loading ? <div className="h-48 bg-muted rounded animate-pulse" /> : (
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart data={[
+                      { name: 'Past Client', value: 1 },
+                      { name: 'Active Buyer', value: 1 },
+                      { name: 'Seller', value: 1 },
+                      { name: 'Prospect', value: 2 },
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" tick={{ fontSize: 11 }} />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="value" fill="#7c3aed" radius={[4,4,0,0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                )}
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader><CardTitle className="text-sm">Lead Warmth Distribution</CardTitle></CardHeader>
+              <CardContent>
+                {loading ? <div className="h-48 bg-muted rounded animate-pulse" /> : (
+                  <ResponsiveContainer width="100%" height={200}>
+                    <PieChart>
+                      <Pie data={[
+                        { name: 'Hot', value: 1 },
+                        { name: 'Warm', value: 2 },
+                        { name: 'Cold', value: 2 },
+                      ]} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({name, value}) => `${name}: ${value}`}>
+                        {[0,1,2].map((_, i) => <Cell key={i} fill={['#dc2626','#d97706','#3b82f6'][i]} />)}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {['pm','leasing'].map(tab => (
+          <TabsContent key={tab} value={tab} className="mt-4">
             <Card>
               <CardContent className="p-8 text-center">
                 <BarChart3 className="w-10 h-10 mx-auto mb-3 text-muted-foreground/40" />
-                <p className="font-medium text-muted-foreground">Detailed {tab === 'pm' ? 'Property Management' : tab} analytics</p>
+                <p className="font-medium text-muted-foreground">Detailed {tab === 'pm' ? 'Property Management' : 'Leasing'} analytics</p>
                 <p className="text-sm text-muted-foreground mt-1">More data will appear here as the system tracks activity over time.</p>
               </CardContent>
             </Card>
