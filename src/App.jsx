@@ -12,6 +12,8 @@ import { ROLES } from '@/lib/roles';
 // Pages
 import OwnerDashboard from '@/pages/OwnerDashboard';
 import SalesDashboard from '@/pages/SalesDashboard';
+import SalesListingsPage from '@/pages/SalesListingsPage';
+import CRMPage from '@/pages/CRMPage';
 import PropertyManagementDashboard from '@/pages/PropertyManagementDashboard';
 import LeasingDashboard from '@/pages/LeasingDashboard';
 import ContactsPage from '@/pages/ContactsPage';
@@ -81,6 +83,8 @@ const AuthenticatedApp = () => {
           <Route element={<AppLayout />}>
             <Route path="/" element={<RoleHomeDashboard />} />
             <Route path="/sales" element={<SalesDashboard />} />
+            <Route path="/sales-listings" element={<SalesListingsPage />} />
+            <Route path="/crm" element={<CRMPage />} />
             <Route path="/property-management" element={<PropertyManagementDashboard />} />
             <Route path="/leasing" element={<LeasingDashboard />} />
             <Route path="/contacts" element={<ContactsPage />} />

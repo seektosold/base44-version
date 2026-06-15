@@ -13,10 +13,10 @@ import { cn } from '@/lib/utils';
 
 const ownerNav = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/' },
-  { icon: TrendingUp, label: 'Sales', href: '/sales' },
+  { icon: Building2, label: 'Sales Listings', href: '/sales-listings' },
+  { icon: Users, label: 'CRM', href: '/crm' },
   { icon: Wrench, label: 'Property Management', href: '/property-management' },
   { icon: Key, label: 'Leasing', href: '/leasing' },
-  { icon: Users, label: 'Contacts', href: '/contacts' },
   { icon: Building2, label: 'Properties', href: '/properties' },
   { icon: MessageSquare, label: 'Messages', href: '/messages' },
   { icon: Workflow, label: 'Workflows', href: '/workflows' },
@@ -31,12 +31,9 @@ const ownerNav = [
 
 const salesNav = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/' },
-  { icon: TrendingUp, label: 'Opportunities', href: '/sales' },
-  { icon: Users, label: 'Contacts', href: '/contacts' },
+  { icon: Building2, label: 'Sales Listings', href: '/sales-listings' },
+  { icon: Users, label: 'CRM', href: '/crm' },
   { icon: Home, label: 'Appraisals', href: '/appraisals' },
-  { icon: Building2, label: 'Listings', href: '/listings' },
-  { icon: UserCheck, label: 'Buyers', href: '/buyers' },
-  { icon: TrendingUp, label: 'Sellers', href: '/sellers' },
   { icon: Zap, label: 'Signals', href: '/signals' },
   { icon: MessageSquare, label: 'Message Studio', href: '/messages' },
   { icon: CheckSquare, label: 'Tasks', href: '/tasks' },
