@@ -62,19 +62,25 @@ export default function OwnerDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      base44.entities.Signal.list('-created_date', 20),
-      base44.entities.Task.filter({ status: 'pending' }, '-due_date', 10),
-      base44.entities.Message.filter({ status: 'pending_approval' }, '-created_date', 10),
-      base44.entities.ServiceRequest.list('-created_date', 10),
-      base44.entities.Contact.list('-created_date', 5),
-    ]).then(([s, t, m, sr, c]) => {
-      setSignals(s);
-      setTasks(t);
-      setMessages(m);
-      setServiceRequests(sr);
-      setContacts(c);
-    }).finally(() => setLoading(false));
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      Promise.all([
+        base44.entities.Signal.list('-created_date', 20),
+        base44.entities.Task.filter({ status: 'pending' }, '-due_date', 10),
+        base44.entities.Message.filter({ status: 'pending_approval' }, '-created_date', 10),
+        base44.entities.ServiceRequest.list('-created_date', 10),
+        base44.entities.Contact.list('-created_date', 5),
+      ]).then(([s, t, m, sr, c]) => {
+        if (!cancelled) {
+          setSignals(s);
+          setTasks(t);
+          setMessages(m);
+          setServiceRequests(sr);
+          setContacts(c);
+        }
+      }).finally(() => { if (!cancelled) setLoading(false); });
+    }, 100);
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
   const urgentSignals = signals.filter(s => s.urgency_score >= 8);

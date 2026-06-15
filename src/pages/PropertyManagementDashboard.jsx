@@ -50,15 +50,21 @@ export default function PropertyManagementDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      base44.entities.ServiceRequest.list('-created_date', 20),
-      base44.entities.Signal.filter({ module_type: 'property_management' }, '-urgency_score', 10),
-      base44.entities.Task.filter({ module_type: 'property_management' }, '-due_date', 10),
-    ]).then(([sr, s, t]) => {
-      setServiceRequests(sr);
-      setSignals(s);
-      setTasks(t);
-    }).finally(() => setLoading(false));
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      Promise.all([
+        base44.entities.ServiceRequest.list('-created_date', 20),
+        base44.entities.Signal.filter({ module_type: 'property_management' }, '-urgency_score', 10),
+        base44.entities.Task.filter({ module_type: 'property_management' }, '-due_date', 10),
+      ]).then(([sr, s, t]) => {
+        if (!cancelled) {
+          setServiceRequests(sr);
+          setSignals(s);
+          setTasks(t);
+        }
+      }).finally(() => { if (!cancelled) setLoading(false); });
+    }, 100);
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
   const byStatus = (status) => serviceRequests.filter(sr => sr.status === status);

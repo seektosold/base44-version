@@ -102,15 +102,21 @@ export default function SalesDashboard() {
   const [viewingSignal, setViewingSignal] = useState(null);
 
   useEffect(() => {
-    Promise.all([
-      base44.entities.Signal.filter({ module_type: 'sales' }, '-urgency_score', 20),
-      base44.entities.Task.filter({ module_type: 'sales' }, '-due_date', 10),
-      base44.entities.Message.filter({ module_type: 'sales', status: 'pending_approval' }, '-created_date', 5),
-    ]).then(([s, t, m]) => {
-      setSignals(s);
-      setTasks(t);
-      setMessages(m);
-    }).finally(() => setLoading(false));
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      Promise.all([
+        base44.entities.Signal.filter({ module_type: 'sales' }, '-urgency_score', 20),
+        base44.entities.Task.filter({ module_type: 'sales' }, '-due_date', 10),
+        base44.entities.Message.filter({ module_type: 'sales', status: 'pending_approval' }, '-created_date', 5),
+      ]).then(([s, t, m]) => {
+        if (!cancelled) {
+          setSignals(s);
+          setTasks(t);
+          setMessages(m);
+        }
+      }).finally(() => { if (!cancelled) setLoading(false); });
+    }, 100);
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
 
   const prioritySignals = signals.filter(s => s.urgency_score >= 7);
